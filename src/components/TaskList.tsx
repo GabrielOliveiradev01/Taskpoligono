@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTasks } from '../context/TaskContext';
-import { Priority } from '../types';
+import { Priority, Task } from '../types';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { 
