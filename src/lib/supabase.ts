@@ -15,6 +15,7 @@ export interface TaskRow {
   user_name: string; // Apenas nome do usuário (sem user_id)
   solicitante: string;
   title: string;
+  comentario: string;
   priority: 'baixa' | 'media' | 'alta' | 'urgente';
   due_date: string;
   completed: boolean;
@@ -26,6 +27,7 @@ export interface SubtaskRow {
   id: string;
   task_id: string;
   title: string;
+  comentario: string;
   completed: boolean;
   created_at: string;
 }

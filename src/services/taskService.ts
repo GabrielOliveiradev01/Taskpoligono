@@ -17,6 +17,7 @@ const taskRowToTask = async (taskRow: TaskRow): Promise<Task> => {
   const subtasks: Subtask[] = (subtasksData || []).map((st: SubtaskRow) => ({
     id: st.id,
     title: st.title,
+    comentario: st.comentario || '',
     completed: st.completed,
     createdAt: new Date(st.created_at),
   }));
@@ -26,6 +27,7 @@ const taskRowToTask = async (taskRow: TaskRow): Promise<Task> => {
     userName: taskRow.user_name,
     solicitante: taskRow.solicitante,
     title: taskRow.title,
+    comentario: taskRow.comentario || '',
     priority: taskRow.priority,
     dueDate: new Date(taskRow.due_date),
     completed: taskRow.completed,
@@ -84,6 +86,7 @@ export const createTask = async (taskData: TaskFormData): Promise<Task> => {
         user_name: taskData.userName,
         solicitante: taskData.solicitante,
         title: taskData.title,
+        comentario: taskData.comentario || '',
         priority: taskData.priority,
         due_date: taskData.dueDate,
         completed: false,
@@ -130,6 +133,7 @@ export const updateTask = async (
   taskId: string,
   updates: Partial<{
     title: string;
+    comentario: string;
     priority: 'baixa' | 'media' | 'alta' | 'urgente';
     due_date: string;
     completed: boolean;
@@ -170,6 +174,7 @@ export const createSubtask = async (
     .insert({
       task_id: taskId,
       title: subtaskData.title,
+      comentario: subtaskData.comentario || '',
       completed: false,
     })
     .select()
@@ -183,6 +188,7 @@ export const createSubtask = async (
   return {
     id: data.id,
     title: data.title,
+    comentario: data.comentario || '',
     completed: data.completed,
     createdAt: new Date(data.created_at),
   };
@@ -191,7 +197,7 @@ export const createSubtask = async (
 // Atualizar subtarefa
 export const updateSubtask = async (
   subtaskId: string,
-  updates: Partial<{ title: string; completed: boolean }>
+  updates: Partial<{ title: string; comentario: string; completed: boolean }>
 ): Promise<void> => {
   const { error } = await supabase
     .from('subtasks')

@@ -3,6 +3,7 @@ export type Priority = 'baixa' | 'media' | 'alta' | 'urgente';
 export interface Subtask {
   id: string;
   title: string;
+  comentario: string;
   completed: boolean;
   createdAt: Date;
 }
@@ -12,6 +13,7 @@ export interface Task {
   userName: string;
   solicitante: string;
   title: string;
+  comentario: string;
   priority: Priority;
   dueDate: Date;
   completed: boolean;
@@ -24,11 +26,13 @@ export interface TaskFormData {
   userName: string;
   solicitante: string;
   title: string;
+  comentario: string;
   priority: Priority;
   dueDate: string;
 }
 
 export interface SubtaskFormData {
   title: string;
+  comentario: string;
 }
 

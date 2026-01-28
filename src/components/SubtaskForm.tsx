@@ -11,6 +11,7 @@ const SubtaskForm: React.FC<SubtaskFormProps> = ({ taskId }) => {
   const { addSubtask } = useTasks();
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState('');
+  const [comentario, setComentario] = useState('');
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -21,8 +22,9 @@ const SubtaskForm: React.FC<SubtaskFormProps> = ({ taskId }) => {
     }
 
     try {
-      await addSubtask(taskId, { title: title.trim() });
+      await addSubtask(taskId, { title: title.trim(), comentario: comentario.trim() });
       setTitle('');
+      setComentario('');
       setIsOpen(false);
       setError('');
     } catch (error) {
@@ -33,6 +35,7 @@ const SubtaskForm: React.FC<SubtaskFormProps> = ({ taskId }) => {
 
   const handleCancel = () => {
     setTitle('');
+    setComentario('');
     setIsOpen(false);
     setError('');
   };
@@ -62,6 +65,16 @@ const SubtaskForm: React.FC<SubtaskFormProps> = ({ taskId }) => {
         className={`subtask-input ${error ? 'error' : ''}`}
         placeholder="Título da subtarefa..."
         autoFocus
+      />
+      <textarea
+        value={comentario}
+        onChange={(e) => {
+          setComentario(e.target.value);
+          if (error) setError('');
+        }}
+        className="subtask-input"
+        placeholder="Comentário (opcional)..."
+        rows={2}
       />
       {error && <span className="error-message">{error}</span>}
       <div className="subtask-form-actions">

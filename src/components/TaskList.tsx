@@ -234,6 +234,12 @@ const TaskList: React.FC = () => {
 
                 {isExpanded && (
                   <div className="task-expanded-content">
+                    {task.comentario && (
+                      <div className="task-comment-section">
+                        <h4 className="comment-title">Comentário:</h4>
+                        <p className="task-comment">{task.comentario}</p>
+                      </div>
+                    )}
                     <div className="subtasks-section">
                       <div className="subtasks-header">
                         <h4 className="subtasks-title">
@@ -264,7 +270,12 @@ const TaskList: React.FC = () => {
                                   <Circle size={18} className="unchecked" />
                                 )}
                               </button>
-                              <span className="subtask-title">{subtask.title}</span>
+                              <div className="subtask-content">
+                                <span className="subtask-title">{subtask.title}</span>
+                                {subtask.comentario && (
+                                  <p className="subtask-comment">{subtask.comentario}</p>
+                                )}
+                              </div>
                               <button
                                 className="subtask-delete"
                                 onClick={async () => {

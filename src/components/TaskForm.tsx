@@ -14,6 +14,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ onClose }) => {
     userName: '',
     solicitante: '',
     title: '',
+    comentario: '',
     priority: 'media',
     dueDate: '',
   });
@@ -54,6 +55,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ onClose }) => {
           userName: '',
           solicitante: '',
           title: '',
+          comentario: '',
           priority: 'media',
           dueDate: '',
         });
@@ -126,6 +128,20 @@ const TaskForm: React.FC<TaskFormProps> = ({ onClose }) => {
               placeholder="Ex: Implementar funcionalidade X"
             />
             {errors.title && <span className="error-message">{errors.title}</span>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="comentario" className="form-label">
+              Comentário
+            </label>
+            <textarea
+              id="comentario"
+              value={formData.comentario}
+              onChange={(e) => handleChange('comentario', e.target.value)}
+              className="form-input"
+              placeholder="Adicione um comentário sobre a tarefa..."
+              rows={3}
+            />
           </div>
 
           <div className="form-row">
