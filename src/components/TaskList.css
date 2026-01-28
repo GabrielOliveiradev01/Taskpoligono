@@ -220,6 +220,17 @@
   color: var(--success);
 }
 
+.task-backlog {
+  color: var(--text-primary);
+  font-size: var(--font-size-caption);
+}
+
+.task-porcentagem {
+  color: var(--primary);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-caption);
+}
+
 .task-date.overdue {
   color: var(--danger);
   font-weight: var(--font-weight-semibold);
