@@ -1,0 +1,4 @@
+# Redirecionamento para SPA (Single Page Application)
+# Todas as rotas devem redirecionar para index.html
+/*    /index.html   200
+

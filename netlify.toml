@@ -1,0 +1,36 @@
+# Configuração do Netlify
+[build]
+  # Comando para build (instala dependências e faz build)
+  command = "npm install && npm run build"
+  # Diretório de publicação
+  publish = "dist"
+  # Node.js version (opcional, mas recomendado)
+  # Configure no painel: Site settings → Build & deploy → Environment → Node version = 18
+
+# Configurações de redirecionamento para SPA
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers de segurança
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Headers para arquivos estáticos (cache)
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Headers para index.html (sem cache)
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
