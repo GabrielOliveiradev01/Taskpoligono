@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTasks } from '../context/TaskContext';
-import { Task, Priority } from '../types';
+import { Priority } from '../types';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { 
@@ -34,16 +34,6 @@ const TaskList: React.FC = () => {
       newExpanded.add(taskId);
     }
     setExpandedTasks(newExpanded);
-  };
-
-  const getPriorityColor = (priority: Priority): string => {
-    const colors = {
-      urgente: 'var(--danger)',
-      alta: 'var(--warning)',
-      media: 'var(--info)',
-      baixa: 'var(--success)',
-    };
-    return colors[priority];
   };
 
   const getPriorityLabel = (priority: Priority): string => {

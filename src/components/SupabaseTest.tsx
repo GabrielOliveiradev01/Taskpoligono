@@ -31,7 +31,7 @@ const SupabaseTest: React.FC = () => {
   const testConnection = async () => {
     try {
       addMessage('Testando conexão com Supabase...', 'info');
-      const { data, error } = await supabase.from('tasks').select('count', { count: 'exact', head: true });
+      const { error } = await supabase.from('tasks').select('count', { count: 'exact', head: true });
       
       if (error) throw error;
       
@@ -106,7 +106,7 @@ const SupabaseTest: React.FC = () => {
 
     try {
       addMessage('Testando atualização de tarefa...', 'info');
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('tasks')
         .update({ completed: true, title: 'Tarefa Atualizada - Teste' })
         .eq('id', testTaskId)

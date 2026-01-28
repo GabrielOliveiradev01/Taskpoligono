@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react';
-import { Task, Subtask, TaskFormData, SubtaskFormData, Priority } from '../types';
+import { Task, TaskFormData, SubtaskFormData, Priority } from '../types';
 import {
   fetchTasks,
   createTask,

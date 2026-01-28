@@ -5,7 +5,7 @@
   # Diretório de publicação
   publish = "dist"
   # Node.js version (opcional, mas recomendado)
-  # Configure no painel: Site settings → Build & deploy → Environment → Node version = 18
+  # Configure no painel: Site settings → Build & deploy → Environment → Node version = 20
 
 # Configurações de redirecionamento para SPA
 [[redirects]]

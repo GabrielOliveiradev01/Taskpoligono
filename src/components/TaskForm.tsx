@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTasks } from '../context/TaskContext';
-import { TaskFormData, Priority } from '../types';
+import { TaskFormData } from '../types';
 import { X } from 'lucide-react';
 import './TaskForm.css';
 

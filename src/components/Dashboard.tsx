@@ -10,7 +10,6 @@ const Dashboard: React.FC = () => {
   const completedTasks = getTasksByStatus(true).length;
   const pendingTasks = getTasksByStatus(false).length;
   const urgentTasks = getTasksByPriority('urgente').length;
-  const highPriorityTasks = getTasksByPriority('alta').length;
   
   const today = new Date();
   const todayTasks = tasks.filter(
