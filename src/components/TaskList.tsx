@@ -28,6 +28,7 @@ const TaskList: React.FC = () => {
   const [taskToEdit, setTaskToEdit] = useState<Task | null>(null);
   const [filterPriority, setFilterPriority] = useState<Priority | 'all'>('all');
   const [filterStatus, setFilterStatus] = useState<'all' | 'completed' | 'pending'>('all');
+  const [filterUser, setFilterUser] = useState<string>('all');
   const [sortBy, setSortBy] = useState<'date' | 'priority' | 'user' | 'userName'>('date');
 
   const toggleExpand = (taskId: string) => {
@@ -44,11 +45,17 @@ const TaskList: React.FC = () => {
     return priority.charAt(0).toUpperCase() + priority.slice(1);
   };
 
+  // Obter lista única de usuários
+  const uniqueUsers = Array.from(new Set(tasks.map(task => task.userName))).sort((a, b) => 
+    a.localeCompare(b, 'pt-BR', { sensitivity: 'base' })
+  );
+
   const filteredTasks = tasks
     .filter((task) => {
       if (filterPriority !== 'all' && task.priority !== filterPriority) return false;
       if (filterStatus === 'completed' && !task.completed) return false;
       if (filterStatus === 'pending' && task.completed) return false;
+      if (filterUser !== 'all' && task.userName !== filterUser) return false;
       return true;
     })
     .sort((a, b) => {
@@ -125,6 +132,22 @@ const TaskList: React.FC = () => {
               <option value="all">Todas</option>
               <option value="pending">Pendentes</option>
               <option value="completed">Concluídas</option>
+            </select>
+          </div>
+
+          <div className="filter-group">
+            <label>Nome de Usuário:</label>
+            <select
+              value={filterUser}
+              onChange={(e) => setFilterUser(e.target.value)}
+              className="filter-select"
+            >
+              <option value="all">Todos</option>
+              {uniqueUsers.map((userName) => (
+                <option key={userName} value={userName}>
+                  {userName}
+                </option>
+              ))}
             </select>
           </div>
 
