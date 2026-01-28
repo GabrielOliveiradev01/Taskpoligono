@@ -199,6 +199,10 @@ const TaskList: React.FC = () => {
                         <User size={14} />
                         {task.userName}
                       </span>
+                      <span className="task-solicitante">
+                        <User size={14} />
+                        {task.solicitante}
+                      </span>
                       <span className={`task-priority ${task.priority}`}>
                         <Flag size={14} />
                         {getPriorityLabel(task.priority)}

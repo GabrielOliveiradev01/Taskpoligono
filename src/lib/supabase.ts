@@ -13,6 +13,7 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 export interface TaskRow {
   id: string; // UUID
   user_name: string; // Apenas nome do usuário (sem user_id)
+  solicitante: string;
   title: string;
   priority: 'baixa' | 'media' | 'alta' | 'urgente';
   due_date: string;

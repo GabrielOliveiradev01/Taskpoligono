@@ -24,6 +24,7 @@ const taskRowToTask = async (taskRow: TaskRow): Promise<Task> => {
   return {
     id: taskRow.id,
     userName: taskRow.user_name,
+    solicitante: taskRow.solicitante,
     title: taskRow.title,
     priority: taskRow.priority,
     dueDate: new Date(taskRow.due_date),
@@ -81,6 +82,7 @@ export const createTask = async (taskData: TaskFormData): Promise<Task> => {
       .from('tasks')
       .insert({
         user_name: taskData.userName,
+        solicitante: taskData.solicitante,
         title: taskData.title,
         priority: taskData.priority,
         due_date: taskData.dueDate,

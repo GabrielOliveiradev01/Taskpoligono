@@ -12,6 +12,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ onClose }) => {
   const { addTask } = useTasks();
   const [formData, setFormData] = useState<TaskFormData>({
     userName: '',
+    solicitante: '',
     title: '',
     priority: 'media',
     dueDate: '',
@@ -24,6 +25,9 @@ const TaskForm: React.FC<TaskFormProps> = ({ onClose }) => {
 
     if (!formData.userName.trim()) {
       newErrors.userName = 'Nome do usuário é obrigatório';
+    }
+    if (!formData.solicitante.trim()) {
+      newErrors.solicitante = 'Solicitante é obrigatório';
     }
     if (!formData.title.trim()) {
       newErrors.title = 'Título da tarefa é obrigatório';
@@ -45,13 +49,14 @@ const TaskForm: React.FC<TaskFormProps> = ({ onClose }) => {
     e.preventDefault();
     if (validate()) {
       try {
-        await       addTask(formData);
-      setFormData({
-        userName: '',
-        title: '',
-        priority: 'media',
-        dueDate: '',
-      });
+        await addTask(formData);
+        setFormData({
+          userName: '',
+          solicitante: '',
+          title: '',
+          priority: 'media',
+          dueDate: '',
+        });
         onClose();
       } catch (error) {
         // Erro já é tratado no contexto
@@ -91,9 +96,21 @@ const TaskForm: React.FC<TaskFormProps> = ({ onClose }) => {
               placeholder="Ex: João Silva"
             />
             {errors.userName && <span className="error-message">{errors.userName}</span>}
-            <p className="form-hint" style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '4px', fontStyle: 'italic' }}>
-              💡 O ID do usuário será gerado automaticamente como UUID (ex: 30a8a87b-8f4c-43df-b1c2-b36dcfcd8468)
-            </p>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="solicitante" className="form-label">
+              Solicitante *
+            </label>
+            <input
+              id="solicitante"
+              type="text"
+              value={formData.solicitante}
+              onChange={(e) => handleChange('solicitante', e.target.value)}
+              className={`form-input ${errors.solicitante ? 'error' : ''}`}
+              placeholder="Ex: Maria Santos"
+            />
+            {errors.solicitante && <span className="error-message">{errors.solicitante}</span>}
           </div>
 
           <div className="form-group">

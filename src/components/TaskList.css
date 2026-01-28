@@ -191,6 +191,7 @@
 }
 
 .task-user,
+.task-solicitante,
 .task-priority,
 .task-date {
   display: inline-flex;

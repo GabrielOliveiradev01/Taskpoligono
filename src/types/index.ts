@@ -10,6 +10,7 @@ export interface Subtask {
 export interface Task {
   id: string;
   userName: string;
+  solicitante: string;
   title: string;
   priority: Priority;
   dueDate: Date;
@@ -21,6 +22,7 @@ export interface Task {
 
 export interface TaskFormData {
   userName: string;
+  solicitante: string;
   title: string;
   priority: Priority;
   dueDate: string;

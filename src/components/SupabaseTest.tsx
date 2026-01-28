@@ -68,6 +68,7 @@ const SupabaseTest: React.FC = () => {
       // Apenas user_name (sem user_id)
       const testTask = {
         user_name: 'Usuário de Teste',
+        solicitante: 'Solicitante de Teste',
         title: `Tarefa de Teste - ${new Date().toLocaleString()}`,
         priority: 'media' as const,
         due_date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
