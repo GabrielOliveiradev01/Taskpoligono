@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTasks } from '../context/TaskContext';
-import { TaskFormData, BacklogStatus } from '../types';
+import { TaskFormData, BacklogStatus, Task } from '../types';
 import { X } from 'lucide-react';
 import './TaskForm.css';
 
 interface TaskFormProps {
   onClose: () => void;
+  taskToEdit?: Task | null;
 }
 
-const TaskForm: React.FC<TaskFormProps> = ({ onClose }) => {
-  const { addTask } = useTasks();
+const TaskForm: React.FC<TaskFormProps> = ({ onClose, taskToEdit }) => {
+  const { addTask, updateTask } = useTasks();
+  const isEditing = !!taskToEdit;
+  
   const [formData, setFormData] = useState<TaskFormData>({
     userName: '',
     solicitante: '',
@@ -22,6 +25,22 @@ const TaskForm: React.FC<TaskFormProps> = ({ onClose }) => {
   });
 
   const [errors, setErrors] = useState<Partial<Record<keyof TaskFormData, string>>>({});
+
+  // Preencher formulário quando estiver editando
+  useEffect(() => {
+    if (taskToEdit) {
+      setFormData({
+        userName: taskToEdit.userName,
+        solicitante: taskToEdit.solicitante,
+        title: taskToEdit.title,
+        comentario: taskToEdit.comentario || '',
+        porcentagem: taskToEdit.porcentagem || 0,
+        backlog: taskToEdit.backlog || 'A fazer',
+        priority: taskToEdit.priority,
+        dueDate: taskToEdit.dueDate ? new Date(taskToEdit.dueDate).toISOString().split('T')[0] : '',
+      });
+    }
+  }, [taskToEdit]);
 
   const validate = (): boolean => {
     const newErrors: Partial<Record<keyof TaskFormData, string>> = {};
@@ -52,21 +71,36 @@ const TaskForm: React.FC<TaskFormProps> = ({ onClose }) => {
     e.preventDefault();
     if (validate()) {
       try {
-        await addTask(formData);
-        setFormData({
-          userName: '',
-          solicitante: '',
-          title: '',
-          comentario: '',
-          porcentagem: 0,
-          backlog: 'A fazer',
-          priority: 'media',
-          dueDate: '',
-        });
+        if (isEditing && taskToEdit) {
+          // Atualizar tarefa existente
+          await updateTask(taskToEdit.id, {
+            userName: formData.userName,
+            solicitante: formData.solicitante,
+            title: formData.title,
+            comentario: formData.comentario,
+            porcentagem: formData.porcentagem,
+            backlog: formData.backlog,
+            priority: formData.priority,
+            dueDate: new Date(formData.dueDate),
+          });
+        } else {
+          // Criar nova tarefa
+          await addTask(formData);
+          setFormData({
+            userName: '',
+            solicitante: '',
+            title: '',
+            comentario: '',
+            porcentagem: 0,
+            backlog: 'A fazer',
+            priority: 'media',
+            dueDate: '',
+          });
+        }
         onClose();
       } catch (error) {
         // Erro já é tratado no contexto
-        console.error('Erro ao criar tarefa:', error);
+        console.error(`Erro ao ${isEditing ? 'atualizar' : 'criar'} tarefa:`, error);
       }
     }
   };
@@ -82,7 +116,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ onClose }) => {
     <div className="task-form-overlay" onClick={onClose}>
       <div className="task-form-modal" onClick={(e) => e.stopPropagation()}>
         <div className="task-form-header">
-          <h2 className="task-form-title">Nova Tarefa</h2>
+          <h2 className="task-form-title">{isEditing ? 'Editar Tarefa' : 'Nova Tarefa'}</h2>
           <button className="close-btn" onClick={onClose} aria-label="Fechar">
             <X size={24} />
           </button>
@@ -225,7 +259,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ onClose }) => {
               Cancelar
             </button>
             <button type="submit" className="btn-primary">
-              Criar Tarefa
+              {isEditing ? 'Salvar Alterações' : 'Criar Tarefa'}
             </button>
           </div>
         </form>

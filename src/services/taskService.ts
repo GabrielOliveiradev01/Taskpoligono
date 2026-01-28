@@ -136,6 +136,8 @@ export const createTask = async (taskData: TaskFormData): Promise<Task> => {
 export const updateTask = async (
   taskId: string,
   updates: Partial<{
+    user_name: string;
+    solicitante: string;
     title: string;
     comentario: string;
     porcentagem: number;

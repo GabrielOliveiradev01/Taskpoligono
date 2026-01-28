@@ -182,6 +182,11 @@ input, select, textarea {
   color: var(--danger);
 }
 
+.btn-icon.edit-btn:hover {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
 .btn-icon-small {
   background: var(--border);
   color: var(--text-secondary);

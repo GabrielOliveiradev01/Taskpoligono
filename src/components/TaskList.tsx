@@ -14,7 +14,8 @@ import {
   User,
   Flag,
   Percent,
-  ListTodo
+  ListTodo,
+  Edit
 } from 'lucide-react';
 import TaskForm from './TaskForm';
 import SubtaskForm from './SubtaskForm';
@@ -24,6 +25,7 @@ const TaskList: React.FC = () => {
   const { tasks, loading, error, toggleTaskComplete, deleteTask, toggleSubtaskComplete, deleteSubtask } = useTasks();
   const [expandedTasks, setExpandedTasks] = useState<Set<string>>(new Set());
   const [showTaskForm, setShowTaskForm] = useState(false);
+  const [taskToEdit, setTaskToEdit] = useState<Task | null>(null);
   const [filterPriority, setFilterPriority] = useState<Priority | 'all'>('all');
   const [filterStatus, setFilterStatus] = useState<'all' | 'completed' | 'pending'>('all');
   const [sortBy, setSortBy] = useState<'date' | 'priority' | 'user'>('date');
@@ -86,7 +88,13 @@ const TaskList: React.FC = () => {
 
         {showTaskForm && (
           <div className="task-form-wrapper">
-            <TaskForm onClose={() => setShowTaskForm(false)} />
+            <TaskForm 
+              onClose={() => {
+                setShowTaskForm(false);
+                setTaskToEdit(null);
+              }} 
+              taskToEdit={taskToEdit}
+            />
           </div>
         )}
 
@@ -231,6 +239,16 @@ const TaskList: React.FC = () => {
                       aria-label={isExpanded ? 'Recolher' : 'Expandir'}
                     >
                       {isExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                    </button>
+                    <button
+                      className="btn-icon edit-btn"
+                      onClick={() => {
+                        setTaskToEdit(task);
+                        setShowTaskForm(true);
+                      }}
+                      aria-label="Editar tarefa"
+                    >
+                      <Edit size={20} />
                     </button>
                     <button
                       className="btn-icon delete-btn"

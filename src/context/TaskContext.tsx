@@ -80,8 +80,13 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       try {
         setError(null);
         const updateData: any = {};
-        if (updates.title) updateData.title = updates.title;
-        if (updates.priority) updateData.priority = updates.priority;
+        if (updates.userName !== undefined) updateData.user_name = updates.userName;
+        if (updates.solicitante !== undefined) updateData.solicitante = updates.solicitante;
+        if (updates.title !== undefined) updateData.title = updates.title;
+        if (updates.comentario !== undefined) updateData.comentario = updates.comentario;
+        if (updates.porcentagem !== undefined) updateData.porcentagem = updates.porcentagem;
+        if (updates.backlog !== undefined) updateData.backlog = updates.backlog;
+        if (updates.priority !== undefined) updateData.priority = updates.priority;
         if (updates.dueDate) updateData.due_date = updates.dueDate.toISOString().split('T')[0];
         if (updates.completed !== undefined) updateData.completed = updates.completed;
 
