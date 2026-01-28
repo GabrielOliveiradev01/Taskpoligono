@@ -16,6 +16,8 @@ export interface TaskRow {
   solicitante: string;
   title: string;
   comentario: string;
+  porcentagem: number;
+  backlog: string;
   priority: 'baixa' | 'media' | 'alta' | 'urgente';
   due_date: string;
   completed: boolean;

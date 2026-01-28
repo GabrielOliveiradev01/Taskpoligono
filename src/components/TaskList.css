@@ -193,6 +193,8 @@
 .task-user,
 .task-solicitante,
 .task-priority,
+.task-backlog,
+.task-porcentagem,
 .task-date {
   display: inline-flex;
   align-items: center;

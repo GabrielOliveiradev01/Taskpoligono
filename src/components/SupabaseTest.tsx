@@ -71,6 +71,8 @@ const SupabaseTest: React.FC = () => {
         solicitante: 'Solicitante de Teste',
         title: `Tarefa de Teste - ${new Date().toLocaleString()}`,
         comentario: 'Comentário de teste para a tarefa',
+        porcentagem: 50,
+        backlog: 'Em andamento',
         priority: 'media' as const,
         due_date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
         completed: false,

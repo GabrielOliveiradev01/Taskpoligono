@@ -1,5 +1,7 @@
 export type Priority = 'baixa' | 'media' | 'alta' | 'urgente';
 
+export type BacklogStatus = 'Textos fixos' | 'Em andamento' | 'A fazer' | 'teste' | 'revisão' | 'concluido' | 'bloqueado';
+
 export interface Subtask {
   id: string;
   title: string;
@@ -14,6 +16,8 @@ export interface Task {
   solicitante: string;
   title: string;
   comentario: string;
+  porcentagem: number;
+  backlog: BacklogStatus;
   priority: Priority;
   dueDate: Date;
   completed: boolean;
@@ -27,6 +31,8 @@ export interface TaskFormData {
   solicitante: string;
   title: string;
   comentario: string;
+  porcentagem: number;
+  backlog: BacklogStatus;
   priority: Priority;
   dueDate: string;
 }

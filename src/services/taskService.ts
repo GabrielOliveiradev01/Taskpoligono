@@ -1,5 +1,5 @@
 import { supabase, TaskRow, SubtaskRow } from '../lib/supabase';
-import { Task, Subtask, TaskFormData, SubtaskFormData } from '../types';
+import { Task, Subtask, TaskFormData, SubtaskFormData, BacklogStatus } from '../types';
 
 // Converter TaskRow do banco para Task do frontend
 const taskRowToTask = async (taskRow: TaskRow): Promise<Task> => {
@@ -28,6 +28,8 @@ const taskRowToTask = async (taskRow: TaskRow): Promise<Task> => {
     solicitante: taskRow.solicitante,
     title: taskRow.title,
     comentario: taskRow.comentario || '',
+    porcentagem: taskRow.porcentagem || 0,
+    backlog: (taskRow.backlog || 'A fazer') as BacklogStatus,
     priority: taskRow.priority,
     dueDate: new Date(taskRow.due_date),
     completed: taskRow.completed,
@@ -87,6 +89,8 @@ export const createTask = async (taskData: TaskFormData): Promise<Task> => {
         solicitante: taskData.solicitante,
         title: taskData.title,
         comentario: taskData.comentario || '',
+        porcentagem: taskData.porcentagem || 0,
+        backlog: taskData.backlog || 'A fazer',
         priority: taskData.priority,
         due_date: taskData.dueDate,
         completed: false,
@@ -134,6 +138,8 @@ export const updateTask = async (
   updates: Partial<{
     title: string;
     comentario: string;
+    porcentagem: number;
+    backlog: string;
     priority: 'baixa' | 'media' | 'alta' | 'urgente';
     due_date: string;
     completed: boolean;

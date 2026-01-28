@@ -12,7 +12,9 @@ import {
   Plus,
   Calendar,
   User,
-  Flag
+  Flag,
+  Percent,
+  ListTodo
 } from 'lucide-react';
 import TaskForm from './TaskForm';
 import SubtaskForm from './SubtaskForm';
@@ -206,6 +208,14 @@ const TaskList: React.FC = () => {
                       <span className={`task-priority ${task.priority}`}>
                         <Flag size={14} />
                         {getPriorityLabel(task.priority)}
+                      </span>
+                      <span className="task-backlog">
+                        <ListTodo size={14} />
+                        {task.backlog}
+                      </span>
+                      <span className="task-porcentagem">
+                        <Percent size={14} />
+                        {task.porcentagem}%
                       </span>
                       <span className={`task-date ${overdue ? 'overdue' : ''}`}>
                         <Calendar size={14} />

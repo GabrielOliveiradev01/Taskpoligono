@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTasks } from '../context/TaskContext';
-import { TaskFormData } from '../types';
+import { TaskFormData, BacklogStatus } from '../types';
 import { X } from 'lucide-react';
 import './TaskForm.css';
 
@@ -15,6 +15,8 @@ const TaskForm: React.FC<TaskFormProps> = ({ onClose }) => {
     solicitante: '',
     title: '',
     comentario: '',
+    porcentagem: 0,
+    backlog: 'A fazer',
     priority: 'media',
     dueDate: '',
   });
@@ -56,6 +58,8 @@ const TaskForm: React.FC<TaskFormProps> = ({ onClose }) => {
           solicitante: '',
           title: '',
           comentario: '',
+          porcentagem: 0,
+          backlog: 'A fazer',
           priority: 'media',
           dueDate: '',
         });
@@ -67,7 +71,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ onClose }) => {
     }
   };
 
-  const handleChange = (field: keyof TaskFormData, value: string) => {
+  const handleChange = (field: keyof TaskFormData, value: string | number) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors((prev) => ({ ...prev, [field]: undefined }));
@@ -175,6 +179,44 @@ const TaskForm: React.FC<TaskFormProps> = ({ onClose }) => {
                 min={new Date().toISOString().split('T')[0]}
               />
               {errors.dueDate && <span className="error-message">{errors.dueDate}</span>}
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="porcentagem" className="form-label">
+                Porcentagem (%)
+              </label>
+              <input
+                id="porcentagem"
+                type="number"
+                min="0"
+                max="100"
+                value={formData.porcentagem}
+                onChange={(e) => handleChange('porcentagem', parseInt(e.target.value) || 0)}
+                className="form-input"
+                placeholder="0"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="backlog" className="form-label">
+                Backlog *
+              </label>
+              <select
+                id="backlog"
+                value={formData.backlog}
+                onChange={(e) => handleChange('backlog', e.target.value as BacklogStatus)}
+                className="form-select"
+              >
+                <option value="Textos fixos">Textos fixos</option>
+                <option value="Em andamento">Em andamento</option>
+                <option value="A fazer">A fazer</option>
+                <option value="teste">teste</option>
+                <option value="revisão">revisão</option>
+                <option value="concluido">concluido</option>
+                <option value="bloqueado">bloqueado</option>
+              </select>
             </div>
           </div>
 
