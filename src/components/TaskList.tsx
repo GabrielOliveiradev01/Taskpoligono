@@ -28,7 +28,7 @@ const TaskList: React.FC = () => {
   const [taskToEdit, setTaskToEdit] = useState<Task | null>(null);
   const [filterPriority, setFilterPriority] = useState<Priority | 'all'>('all');
   const [filterStatus, setFilterStatus] = useState<'all' | 'completed' | 'pending'>('all');
-  const [sortBy, setSortBy] = useState<'date' | 'priority' | 'user'>('date');
+  const [sortBy, setSortBy] = useState<'date' | 'priority' | 'user' | 'userName'>('date');
 
   const toggleExpand = (taskId: string) => {
     const newExpanded = new Set(expandedTasks);
@@ -57,7 +57,8 @@ const TaskList: React.FC = () => {
           const priorityOrder = { urgente: 4, alta: 3, media: 2, baixa: 1 };
           return priorityOrder[b.priority] - priorityOrder[a.priority];
         case 'user':
-          return a.userName.localeCompare(b.userName);
+        case 'userName':
+          return a.userName.localeCompare(b.userName, 'pt-BR', { sensitivity: 'base' });
         case 'date':
         default:
           return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
@@ -131,12 +132,12 @@ const TaskList: React.FC = () => {
             <label>Ordenar por:</label>
             <select
               value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as 'date' | 'priority' | 'user')}
+              onChange={(e) => setSortBy(e.target.value as 'date' | 'priority' | 'user' | 'userName')}
               className="filter-select"
             >
               <option value="date">Data</option>
               <option value="priority">Prioridade</option>
-              <option value="user">Usuário</option>
+              <option value="userName">Nome de Usuário</option>
             </select>
           </div>
         </div>
